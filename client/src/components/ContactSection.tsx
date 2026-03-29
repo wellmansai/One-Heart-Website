@@ -13,7 +13,7 @@ import { t } from "@/lib/translations";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const eventTypes = [
+const getEventTypes = (lang: string) => [
   "Wedding",
   "Corporate Event",
   "Birthday / Milestone",
@@ -63,7 +63,7 @@ export default function ContactSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [language]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -74,12 +74,19 @@ export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.eventType) {
-      toast.error("Please fill in all required fields.");
+      toast.error(t("contact.freeConsultationNote", language));
       return;
     }
     setSubmitted(true);
-    toast.success("Your inquiry has been sent! We'll be in touch within 24 hours.");
+    toast.success(t("contact.successMessage", language));
   };
+
+  const trustBadges = [
+    t("contact.freeConsultation", language),
+    t("contact.dedicatedPlanner", language),
+    t("contact.transparentPricing", language),
+    t("contact.support24_7", language),
+  ];
 
   return (
     <section id="contact" ref={sectionRef} className="py-24 relative">
@@ -96,32 +103,29 @@ export default function ContactSection() {
                   className="text-xs font-semibold text-violet-700 tracking-widest uppercase"
                   style={{ fontFamily: "'Outfit', sans-serif" }}
                 >
-                  Get In Touch
+                  {t("contact.badge", language)}
                 </span>
               </div>
               <h2
                 className="text-4xl sm:text-5xl font-black tracking-tight mb-4"
                 style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
               >
-                Let's Plan Your{" "}
-                <span className="italic" style={{ color: "oklch(0.52 0.22 293)" }}>
-                  Perfect Event
-                </span>
+                {t("contact.headline", language)}
               </h2>
               <p
                 className="text-gray-500 text-lg leading-relaxed"
                 style={{ fontFamily: "'Outfit', sans-serif" }}
               >
-                Ready to create something extraordinary? Tell us about your vision and we'll craft a personalized plan just for you.
+                {t("contact.description", language)}
               </p>
             </div>
 
             {/* Contact info */}
             <div className="flex flex-col gap-4">
               {[
-                { icon: Mail, label: "Email Us", value: "hello@eventique.co", color: "bg-violet-100 text-violet-600" },
-                { icon: Phone, label: "Call Us", value: "+1 (555) 123-4567", color: "bg-blue-100 text-blue-600" },
-                { icon: MapPin, label: "Visit Us", value: "123 Event Plaza, New York, NY", color: "bg-rose-100 text-rose-600" },
+                { icon: Mail, label: t("contact.emailUs", language), value: t("contact.email", language), color: "bg-violet-100 text-violet-600" },
+                { icon: Phone, label: t("contact.callUs", language), value: t("contact.phone", language), color: "bg-blue-100 text-blue-600" },
+                { icon: MapPin, label: t("contact.visitUs", language), value: t("contact.address", language), color: "bg-rose-100 text-rose-600" },
               ].map(({ icon: Icon, label, value, color }) => (
                 <div key={label} className="flex items-center gap-4">
                   <div className={`w-11 h-11 rounded-xl ${color} flex items-center justify-center flex-shrink-0`}>
@@ -145,15 +149,10 @@ export default function ContactSection() {
                 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3"
                 style={{ fontFamily: "'Outfit', sans-serif" }}
               >
-                Why Choose Eventique
+                {t("contact.whyChoose", language)}
               </p>
               <div className="grid grid-cols-2 gap-3">
-                {[
-                  "Free Consultation",
-                  "Dedicated Planner",
-                  "Transparent Pricing",
-                  "24/7 Support",
-                ].map((item) => (
+                {trustBadges.map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-violet-500 flex-shrink-0" />
                     <span className="text-sm text-gray-600" style={{ fontFamily: "'Outfit', sans-serif" }}>
@@ -177,16 +176,16 @@ export default function ContactSection() {
                     className="text-2xl font-bold"
                     style={{ fontFamily: "'Fraunces', serif", color: "oklch(0.12 0.01 285)" }}
                   >
-                    We'll Be In Touch!
+                    {t("contact.successTitle", language)}
                   </h3>
                   <p className="text-gray-500 text-sm max-w-xs" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                    Thank you for reaching out. Our team will contact you within 24 hours to discuss your event.
+                    {t("contact.successMessage", language)}
                   </p>
                   <button
                     className="btn-black mt-2"
                     onClick={() => setSubmitted(false)}
                   >
-                    Submit Another Inquiry
+                    {t("contact.submitAnother", language)}
                   </button>
                 </div>
               ) : (
@@ -195,13 +194,13 @@ export default function ContactSection() {
                     className="text-2xl font-bold mb-1"
                     style={{ fontFamily: "'Fraunces', serif", color: "oklch(0.12 0.01 285)" }}
                   >
-                    Start Your Journey
+                    {t("contact.startYourJourney", language)}
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Full Name *
+                        {t("contact.fullName", language)} *
                       </label>
                       <input
                         type="text"
@@ -216,7 +215,7 @@ export default function ContactSection() {
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Email *
+                        {t("contact.emailAddress", language)} *
                       </label>
                       <input
                         type="email"
@@ -234,7 +233,7 @@ export default function ContactSection() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Phone
+                        {t("contact.phoneNumber", language)}
                       </label>
                       <input
                         type="tel"
@@ -248,7 +247,7 @@ export default function ContactSection() {
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        Event Type *
+                        {t("contact.eventType", language)} *
                       </label>
                       <select
                         name="eventType"
@@ -258,9 +257,9 @@ export default function ContactSection() {
                         style={{ fontFamily: "'Outfit', sans-serif" }}
                         required
                       >
-                        <option value="">Select type...</option>
-                        {eventTypes.map((t) => (
-                          <option key={t} value={t}>{t}</option>
+                        <option value="">{t("contact.selectType", language)}</option>
+                        {getEventTypes(language).map((eventType) => (
+                          <option key={eventType} value={eventType}>{eventType}</option>
                         ))}
                       </select>
                     </div>
@@ -268,7 +267,7 @@ export default function ContactSection() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      Preferred Date
+                      {t("contact.preferredDate", language)}
                     </label>
                     <input
                       type="date"
@@ -282,13 +281,13 @@ export default function ContactSection() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      Tell Us About Your Vision
+                      {t("contact.tellUsAboutVision", language)}
                     </label>
                     <textarea
                       name="message"
                       value={form.message}
                       onChange={handleChange}
-                      placeholder="Describe your dream event, guest count, budget range, and any special requests..."
+                      placeholder={t("contact.visionPlaceholder", language)}
                       rows={4}
                       className="px-4 py-3 rounded-xl border border-gray-200 bg-white/60 backdrop-blur-sm text-sm focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-transparent transition-all resize-none"
                       style={{ fontFamily: "'Outfit', sans-serif" }}
@@ -296,12 +295,12 @@ export default function ContactSection() {
                   </div>
 
                   <button type="submit" className="btn-black justify-center w-full py-4">
-                    Send My Inquiry
+                    {t("contact.sendInquiry", language)}
                     <Send className="w-4 h-4" />
                   </button>
 
-                  <p className="text-xs text-center text-gray-400" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                    Free consultation · No commitment required · Response within 24 hours
+                  <p className="text-xs text-gray-400 text-center" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                    {t("contact.freeConsultationNote", language)}
                   </p>
                 </form>
               )}

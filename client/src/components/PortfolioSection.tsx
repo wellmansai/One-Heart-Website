@@ -1,5 +1,3 @@
-import { useLanguage } from "@/contexts/LanguageContext";
-import { t } from "@/lib/translations";
 /**
  * PortfolioSection — Eventique
  * Style: Masonry-style image grid with glass overlay on hover
@@ -9,6 +7,8 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,45 +21,44 @@ const BIRTHDAY_IMG =
 const HERO_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/hero-event-DGPT3edYTMGyoX9VKeY6wu.webp";
 
-const portfolio = [
+const getPortfolio = (lang: string) => [
   {
-    title: "The Hartley Wedding",
-    category: "Wedding",
+    title: t("portfolio.hartleyWedding", lang as any),
+    category: t("portfolio.wedding", lang as any),
     image: WEDDING_IMG,
     size: "large",
-    guests: "280 guests",
-    location: "Grand Ballroom, NYC",
+    guests: t("portfolio.hartleyGuests", lang as any),
+    location: t("portfolio.hartleyLocation", lang as any),
   },
   {
-    title: "TechVision Summit 2024",
-    category: "Corporate",
+    title: t("portfolio.techVisionSummit", lang as any),
+    category: t("portfolio.corporate", lang as any),
     image: CORPORATE_IMG,
     size: "small",
-    guests: "600 attendees",
-    location: "Convention Center, LA",
+    guests: t("portfolio.techVisionGuests", lang as any),
+    location: t("portfolio.techVisionLocation", lang as any),
   },
   {
-    title: "Sofia's Sweet 30",
-    category: "Birthday",
+    title: t("portfolio.sofiaSweet30", lang as any),
+    category: t("portfolio.birthday", lang as any),
     image: BIRTHDAY_IMG,
     size: "small",
-    guests: "120 guests",
-    location: "Rooftop Venue, Miami",
+    guests: t("portfolio.sofiaGuests", lang as any),
+    location: t("portfolio.sofiaLocation", lang as any),
   },
   {
-    title: "The Lavender Gala",
-    category: "Gala",
+    title: t("portfolio.lavenderGala", lang as any),
+    category: t("portfolio.gala", lang as any),
     image: HERO_IMG,
     size: "large",
-    guests: "350 guests",
-    location: "The Ritz, Chicago",
+    guests: t("portfolio.galaGuests", lang as any),
+    location: t("portfolio.galaLocation", lang as any),
   },
 ];
 
-
-
 export default function PortfolioSection() {
   const { language } = useLanguage();
+  const portfolio = getPortfolio(language);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -82,12 +81,12 @@ export default function PortfolioSection() {
       if (items) {
         gsap.fromTo(
           items,
-          { opacity: 0, scale: 0.93 },
+          { opacity: 0, scale: 0.9 },
           {
             opacity: 1,
             scale: 1,
-            duration: 0.7,
-            stagger: 0.12,
+            duration: 0.6,
+            stagger: 0.1,
             ease: "power3.out",
             scrollTrigger: { trigger: gridRef.current, start: "top 80%" },
           }
@@ -96,7 +95,7 @@ export default function PortfolioSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [language]);
 
   return (
     <section id="portfolio" ref={sectionRef} className="py-24 relative">
@@ -109,87 +108,68 @@ export default function PortfolioSection() {
               className="text-xs font-semibold text-violet-700 tracking-widest uppercase"
               style={{ fontFamily: "'Outfit', sans-serif" }}
             >
-              Our Work
+              {t("portfolio.badge", language)}
             </span>
           </div>
           <h2
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4"
             style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
           >
-            Events That{" "}
-            <span className="italic" style={{ color: "oklch(0.52 0.22 293)" }}>
-              Inspire
-            </span>
+            {t("portfolio.headline", language)}
           </h2>
           <p
             className="text-gray-500 text-lg max-w-lg mx-auto"
             style={{ fontFamily: "'Outfit', sans-serif" }}
           >
-            A glimpse into the moments we've crafted for our clients.
+            {t("portfolio.description", language)}
           </p>
         </div>
 
-        {/* Portfolio grid — masonry style */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {portfolio.map((item) => (
+        {/* Portfolio Grid */}
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-max">
+          {portfolio.map((item, i) => (
             <div
-              key={item.title}
-              className={`portfolio-item relative rounded-3xl overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-purple-200/40 transition-all duration-400 ${
-                item.size === "large" ? "md:row-span-1" : ""
+              key={i}
+              className={`portfolio-item group relative overflow-hidden rounded-2xl cursor-pointer ${
+                item.size === "large" ? "lg:col-span-2 lg:row-span-2" : ""
               }`}
-              style={{ height: item.size === "large" ? "380px" : "280px" }}
             >
+              {/* Image */}
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <span
-                    className="inline-block text-xs font-semibold text-violet-300 uppercase tracking-widest mb-2"
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <p
+                    className="text-xs font-semibold text-violet-300 uppercase tracking-widest mb-2"
                     style={{ fontFamily: "'Outfit', sans-serif" }}
                   >
                     {item.category}
-                  </span>
+                  </p>
                   <h3
                     className="text-xl font-bold text-white mb-1"
                     style={{ fontFamily: "'Fraunces', serif" }}
                   >
                     {item.title}
                   </h3>
-                  <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-sm text-white/80" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      {item.guests}
-                    </span>
-                    <span className="text-white/40">·</span>
-                    <span className="text-sm text-white/80" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      {item.location}
-                    </span>
-                  </div>
+                  <p className="text-sm text-gray-300 mb-3" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                    {item.guests} · {item.location}
+                  </p>
+                  <button
+                    onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-violet-300 hover:text-white transition-colors"
+                  >
+                    {t("portfolio.startYourStory", language)}
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </button>
                 </div>
-              </div>
-
-              {/* External link icon */}
-              <div className="absolute top-4 right-4 w-9 h-9 rounded-xl glass-card flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <ExternalLink className="w-4 h-4 text-gray-700" />
               </div>
             </div>
           ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <button
-            className="btn-outline"
-            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
-          >
-            Start Your Story
-          </button>
         </div>
       </div>
     </section>
