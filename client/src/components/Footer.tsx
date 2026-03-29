@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/one-heart-logo-hq-6ziWDjtTJmHa9STSwb7gTY.webp";
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/one-heart-original-logo_d0ae4548.png";
 
 const footerLinks = {
   Services: ["Wedding Planning", "Corporate Events", "Birthday Parties", "Galas & Concerts", "Photography"],
@@ -25,21 +25,7 @@ export default function Footer() {
             {/* Brand */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <img src={LOGO_URL} alt="One Heart" className="w-14 h-14 object-contain" />
-                <div>
-                  <span
-                    className="text-lg font-bold block"
-                    style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
-                  >
-                    One Heart
-                  </span>
-                  <span
-                    className="text-xs text-gray-500 tracking-widest"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                  >
-                    Event Planning
-                  </span>
-                </div>
+                <img src={LOGO_URL} alt="One Heart" className="h-20 object-contain" />
               </div>
               <p
                 className="text-sm text-gray-500 leading-relaxed"
