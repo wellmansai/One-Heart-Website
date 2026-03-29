@@ -2,21 +2,29 @@
  * Navbar — Eventique
  * Style: Glass header, white/88 backdrop blur, rounded pill nav links
  * Font: Outfit (nav items), Fraunces (logo)
+ * Features: One Heart logo, language switcher, bilingual nav
  */
-import { useEffect, useState } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/one-heart-logo_eebc393f.png";
+
+const getNavLinks = (lang: string) => [
+  { label: t("nav.services", lang as any), href: "#services" },
+  { label: t("nav.howItWorks", lang as any), href: "#how-it-works" },
+  { label: t("nav.portfolio", lang as any), href: "#portfolio" },
+  { label: t("nav.testimonials", lang as any), href: "#testimonials" },
+  { label: t("nav.contact", lang as any), href: "#contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { language } = useLanguage();
+  const navLinks = getNavLinks(language);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -48,14 +56,12 @@ export default function Navbar() {
             className="flex items-center gap-2 group"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           >
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center shadow-md">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
+            <img src={LOGO_URL} alt="One Heart" className="w-8 h-8" />
             <span
-              className="text-xl font-bold tracking-tight"
+              className="text-lg font-bold tracking-tight hidden sm:inline"
               style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
             >
-              Eventique
+              One Heart
             </span>
           </a>
 
@@ -73,13 +79,14 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTA */}
+          {/* CTA & Language */}
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
             <button
               onClick={() => handleNavClick("#contact")}
               className="btn-black text-sm py-2.5 px-5"
             >
-              Plan Your Event
+              {t("nav.planEvent", language)}
             </button>
           </div>
 
@@ -106,11 +113,14 @@ export default function Navbar() {
                 {link.label}
               </button>
             ))}
+            <div className="px-4 py-2">
+              <LanguageSwitcher />
+            </div>
             <button
               onClick={() => handleNavClick("#contact")}
               className="btn-black mt-2 justify-center"
             >
-              Plan Your Event
+              {t("nav.planEvent", language)}
             </button>
           </div>
         )}
