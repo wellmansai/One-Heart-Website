@@ -7,11 +7,14 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowRight, Star, Calendar, Users } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 
 const HERO_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/hero-event-DGPT3edYTMGyoX9VKeY6wu.webp";
 
 export default function HeroSection() {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
@@ -78,7 +81,11 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  const headline = ["We Craft", "Unforgettable", "Events"];
+  const headline = [
+    t("hero.headline1", language),
+    t("hero.headline2", language),
+    t("hero.headline3", language),
+  ];
 
   return (
     <section
@@ -102,7 +109,7 @@ export default function HeroSection() {
                   className="text-xs font-semibold text-violet-700 tracking-wide uppercase"
                   style={{ fontFamily: "'Outfit', sans-serif" }}
                 >
-                  Premium Event Planning
+                  {t("hero.badge", language)}
                 </span>
               </div>
             </div>
@@ -135,7 +142,7 @@ export default function HeroSection() {
               className="text-lg text-gray-500 leading-relaxed max-w-md"
               style={{ fontFamily: "'Outfit', sans-serif" }}
             >
-              From intimate gatherings to grand celebrations — we design, coordinate, and execute events that leave lasting impressions.
+              {t("hero.description", language)}
             </p>
 
             {/* CTA */}
@@ -146,7 +153,7 @@ export default function HeroSection() {
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                Start Planning
+                {t("hero.startPlanning", language)}
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
@@ -155,16 +162,16 @@ export default function HeroSection() {
                   document.querySelector("#portfolio")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                View Portfolio
+                {t("hero.viewPortfolio", language)}
               </button>
             </div>
 
             {/* Stats */}
             <div ref={statsRef} className="flex flex-wrap gap-6 pt-2">
               {[
-                { icon: Calendar, value: "500+", label: "Events Planned" },
-                { icon: Users, value: "98%", label: "Client Satisfaction" },
-                { icon: Star, value: "12+", label: "Years Experience" },
+                { icon: Calendar, value: "500+", label: t("hero.eventsPlanned", language) },
+                { icon: Users, value: "98%", label: t("hero.clientSatisfaction", language) },
+                { icon: Star, value: "12+", label: t("hero.yearsExperience", language) },
               ].map(({ icon: Icon, value, label }) => (
                 <div key={label} className="flex items-center gap-2">
                   <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center">
@@ -199,30 +206,30 @@ export default function HeroSection() {
             </div>
 
             {/* Floating glass card — next event */}
-            <div className="absolute -bottom-6 -left-6 glass-card rounded-2xl p-4 shadow-xl max-w-[200px]">
+              <div className="absolute -bottom-6 -left-6 glass-card rounded-2xl p-4 shadow-xl max-w-[200px]">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-xs font-semibold text-green-600" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                  Live Booking
+                  {t("hero.liveBooking", language)}
                 </span>
               </div>
               <p className="text-sm font-bold text-gray-800" style={{ fontFamily: "'Fraunces', serif" }}>
-                Summer Gala 2025
+                {t("hero.summerGala", language)}
               </p>
               <p className="text-xs text-gray-500 mt-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                June 14 · Grand Ballroom
+                {t("hero.grandBallroom", language)}
               </p>
             </div>
 
             {/* Floating glass card — rating */}
-            <div className="absolute -top-4 -right-4 glass-card rounded-2xl p-3 shadow-xl">
+              <div className="absolute -top-4 -right-4 glass-card rounded-2xl p-3 shadow-xl">
               <div className="flex items-center gap-1 mb-1">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star key={s} className="w-3 h-3 text-amber-400 fill-amber-400" />
                 ))}
               </div>
               <p className="text-xs font-semibold text-gray-700" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                5.0 · 240 reviews
+                5.0 · 240 {t("hero.reviews", language)}
               </p>
             </div>
 

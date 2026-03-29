@@ -7,45 +7,45 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MessageSquare, Search, Sparkles, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const steps = [
+const getSteps = (lang: string) => [
   {
     step: "01",
     icon: MessageSquare,
-    title: "Tell Us Your Vision",
-    description:
-      "Share your event idea, budget, and dream details through our simple consultation form. No vision is too big or too small.",
+    title: t("howItWorks.step1", lang as any),
+    description: t("howItWorks.step1Description", lang as any),
     color: "from-violet-400 to-purple-600",
   },
   {
     step: "02",
     icon: Search,
-    title: "We Craft Your Plan",
-    description:
-      "Our expert planners design a custom event blueprint — venues, vendors, timelines, and every detail tailored to you.",
+    title: t("howItWorks.step2", lang as any),
+    description: t("howItWorks.step2Description", lang as any),
     color: "from-pink-400 to-rose-600",
   },
   {
     step: "03",
     icon: Sparkles,
-    title: "We Handle Everything",
-    description:
-      "Sit back while we coordinate vendors, manage logistics, and ensure every element is perfectly in place.",
+    title: t("howItWorks.step3", lang as any),
+    description: t("howItWorks.step3Description", lang as any),
     color: "from-amber-400 to-orange-500",
   },
   {
     step: "04",
     icon: CheckCircle2,
-    title: "You Enjoy the Moment",
-    description:
-      "On the day, our team is on-site managing every detail so you can be fully present and enjoy your event.",
+    title: t("howItWorks.step4", lang as any),
+    description: t("howItWorks.step4Description", lang as any),
     color: "from-emerald-400 to-teal-600",
   },
 ];
 
 export default function HowItWorksSection() {
+  const { language } = useLanguage();
+  const steps = getSteps(language);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
@@ -82,7 +82,7 @@ export default function HowItWorksSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [language]);
 
   return (
     <section id="how-it-works" ref={sectionRef} className="py-24 relative">
@@ -97,23 +97,20 @@ export default function HowItWorksSection() {
               className="text-xs font-semibold text-violet-700 tracking-widest uppercase"
               style={{ fontFamily: "'Outfit', sans-serif" }}
             >
-              The Process
+              {t("howItWorks.badge", language)}
             </span>
           </div>
           <h2
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4"
             style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
           >
-            How It{" "}
-            <span className="italic" style={{ color: "oklch(0.52 0.22 293)" }}>
-              Works
-            </span>
+            {t("howItWorks.headline", language)}
           </h2>
           <p
             className="text-gray-500 text-lg max-w-lg mx-auto"
             style={{ fontFamily: "'Outfit', sans-serif" }}
           >
-            Four simple steps from your first idea to an unforgettable event.
+            {t("howItWorks.description", language)}
           </p>
         </div>
 

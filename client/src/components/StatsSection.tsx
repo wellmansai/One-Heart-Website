@@ -6,17 +6,21 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stats = [
-  { value: 500, suffix: "+", label: "Events Planned", description: "Across 15 cities" },
-  { value: 98, suffix: "%", label: "Client Satisfaction", description: "Based on 1,200+ reviews" },
-  { value: 12, suffix: "+", label: "Years of Experience", description: "Since 2012" },
-  { value: 50, suffix: "+", label: "Trusted Vendors", description: "Curated network" },
+const getStats = (lang: string) => [
+  { value: 500, suffix: "+", label: t("stats.eventsPlanned", lang as any), description: t("stats.across15Cities", lang as any) },
+  { value: 98, suffix: "%", label: t("stats.clientSatisfaction", lang as any), description: t("stats.based1200Reviews", lang as any) },
+  { value: 12, suffix: "+", label: t("stats.yearsExperience", lang as any), description: t("stats.since2012", lang as any) },
+  { value: 50, suffix: "+", label: t("stats.trustedVendors", lang as any), description: t("stats.curatedNetwork", lang as any) },
 ];
 
 export default function StatsSection() {
+  const { language } = useLanguage();
+  const stats = getStats(language);
   const sectionRef = useRef<HTMLDivElement>(null);
   const countersRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +58,7 @@ export default function StatsSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [language, stats]);
 
   return (
     <section ref={sectionRef} className="py-16 relative">

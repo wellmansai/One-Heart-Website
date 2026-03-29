@@ -1,3 +1,5 @@
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 /**
  * PortfolioSection — Eventique
  * Style: Masonry-style image grid with glass overlay on hover
@@ -54,7 +56,10 @@ const portfolio = [
   },
 ];
 
+
+
 export default function PortfolioSection() {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);

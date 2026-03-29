@@ -7,6 +7,8 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Heart, Briefcase, PartyPopper, Music, Camera, Utensils } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,85 +19,81 @@ const CORPORATE_IMG =
 const BIRTHDAY_IMG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/service-birthday-c9TKdWZwfYgK6it28iNcnL.webp";
 
-const services = [
+const getServices = (lang: string) => [
   {
     icon: Heart,
-    title: "Wedding Planning",
-    subtitle: "From Proposal to Forever",
-    description:
-      "Full-service wedding coordination including venue selection, floral design, catering, photography, and day-of management. Every detail crafted with love.",
+    title: t("services.weddingPlanning", lang as any),
+    subtitle: t("services.fromProposalToForever", lang as any),
+    description: t("services.weddingDescription", lang as any),
     image: WEDDING_IMG,
-    tag: "Most Popular",
+    tag: t("services.mostPopular", lang as any),
     tagColor: "bg-rose-100 text-rose-600",
-    features: ["Venue Scouting", "Floral Design", "Catering Coordination", "Day-of Management"],
-    price: "From $2,500",
+    features: (t("services.weddingFeatures", lang as any) as unknown) as string[],
+    price: t("services.weddingPrice", lang as any),
   },
   {
     icon: Briefcase,
-    title: "Corporate Events",
-    subtitle: "Impress. Inspire. Connect.",
-    description:
-      "Conferences, product launches, team retreats, and award ceremonies. We handle logistics so your team can focus on what matters.",
+    title: t("services.corporateEvents", lang as any),
+    subtitle: t("services.impressInspireConnect", lang as any),
+    description: t("services.corporateDescription", lang as any),
     image: CORPORATE_IMG,
-    tag: "Enterprise",
+    tag: t("services.enterprise", lang as any),
     tagColor: "bg-blue-100 text-blue-600",
-    features: ["AV & Tech Setup", "Branded Experiences", "Guest Management", "Keynote Staging"],
-    price: "From $1,800",
+    features: (t("services.corporateFeatures", lang as any) as unknown) as string[],
+    price: t("services.corporatePrice", lang as any),
   },
   {
     icon: PartyPopper,
-    title: "Birthday & Milestones",
-    subtitle: "Celebrate Every Chapter",
-    description:
-      "Milestone birthdays, anniversaries, and life celebrations. We create personalized experiences that reflect who you are.",
+    title: t("services.birthdayMilestones", lang as any),
+    subtitle: t("services.celebrateEveryChapter", lang as any),
+    description: t("services.birthdayDescription", lang as any),
     image: BIRTHDAY_IMG,
-    tag: "Personal",
+    tag: t("services.personal", lang as any),
     tagColor: "bg-amber-100 text-amber-600",
-    features: ["Theme Design", "Entertainment", "Custom Décor", "Surprise Planning"],
-    price: "From $800",
+    features: (t("services.birthdayFeatures", lang as any) as unknown) as string[],
+    price: t("services.birthdayPrice", lang as any),
   },
   {
     icon: Music,
-    title: "Concerts & Galas",
-    subtitle: "Grand Scale, Flawless Execution",
-    description:
-      "Large-scale concerts, charity galas, and fundraising events with full production management and artist coordination.",
+    title: t("services.concertsGalas", lang as any),
+    subtitle: t("services.grandScaleFlawlessExecution", lang as any),
+    description: t("services.concertDescription", lang as any),
     image: null,
-    tag: "Premium",
+    tag: t("services.premium", lang as any),
     tagColor: "bg-violet-100 text-violet-600",
-    features: ["Stage Production", "Artist Liaison", "Ticketing", "Security & Logistics"],
+    features: (t("services.concertFeatures", lang as any) as unknown) as string[],
     price: "Custom Quote",
     gradient: "from-violet-500 to-purple-700",
   },
   {
     icon: Camera,
-    title: "Photo & Film Packages",
-    subtitle: "Memories That Last Forever",
-    description:
-      "Professional photography and videography packages for any event. Drone coverage, same-day edits, and cinematic highlight reels.",
+    title: t("services.photoFilm", lang as any),
+    subtitle: t("services.memoriesThatLastForever", lang as any),
+    description: t("services.photoDescription", lang as any),
     image: null,
-    tag: "Add-on",
+    tag: t("services.addOn", lang as any),
     tagColor: "bg-green-100 text-green-600",
-    features: ["Professional Photography", "Cinematic Video", "Drone Coverage", "Same-Day Edits"],
-    price: "From $600",
+    features: (t("services.photoFeatures", lang as any) as unknown) as string[],
+    price: t("services.photoPrice", lang as any),
     gradient: "from-emerald-400 to-teal-600",
   },
   {
     icon: Utensils,
-    title: "Catering & Tastings",
-    subtitle: "Cuisine That Delights",
-    description:
-      "Curated menus, private chef experiences, and full catering coordination with top-rated vendors for every dietary preference.",
+    title: t("services.cateringTastings", lang as any),
+    subtitle: t("services.cuisineThatDelights", lang as any),
+    description: t("services.cateringDescription", lang as any),
     image: null,
-    tag: "Exclusive",
+    tag: t("services.exclusive", lang as any),
     tagColor: "bg-orange-100 text-orange-600",
-    features: ["Menu Curation", "Private Chef", "Dietary Options", "Bar Service"],
-    price: "From $45/person",
+    features: (t("services.cateringFeatures", lang as any) as unknown) as string[],
+    price: t("services.cateringPrice", lang as any),
     gradient: "from-orange-400 to-rose-500",
   },
 ];
 
 export default function ServicesSection() {
+  const { language } = useLanguage();
+  const services = getServices(language);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -141,7 +139,7 @@ export default function ServicesSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [language]);
 
   return (
     <section id="services" ref={sectionRef} className="py-24 relative">
@@ -157,23 +155,20 @@ export default function ServicesSection() {
               className="text-xs font-semibold text-violet-700 tracking-widest uppercase"
               style={{ fontFamily: "'Outfit', sans-serif" }}
             >
-              Our Services
+              {t("services.badge", language)}
             </span>
           </div>
           <h2
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4"
             style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
           >
-            Everything You Need,{" "}
-            <span className="italic" style={{ color: "oklch(0.52 0.22 293)" }}>
-              Perfectly Planned
-            </span>
+            {t("services.headline", language)}
           </h2>
           <p
             className="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed"
             style={{ fontFamily: "'Outfit', sans-serif" }}
           >
-            From intimate dinners to grand galas, our full suite of services ensures every moment is extraordinary.
+            {t("services.description", language)}
           </p>
         </div>
 
@@ -266,7 +261,7 @@ export default function ServicesSection() {
                       style={{ fontFamily: "'Outfit', sans-serif" }}
                       onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
                     >
-                      Book Now
+                      {t("services.bookNow", language)}
                       <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>

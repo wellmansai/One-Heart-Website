@@ -1,3 +1,5 @@
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 /**
  * TestimonialsSection — Eventique
  * Style: Horizontal scrolling testimonial cards with glass effect
@@ -58,7 +60,10 @@ const testimonials = [
   },
 ];
 
+
+
 export default function TestimonialsSection() {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);

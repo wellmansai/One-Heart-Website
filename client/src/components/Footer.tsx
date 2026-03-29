@@ -4,6 +4,8 @@
  */
 import { Sparkles, Instagram, Twitter, Facebook, Linkedin } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/lib/translations";
 
 const footerLinks = {
   Services: ["Wedding Planning", "Corporate Events", "Birthday Parties", "Galas & Concerts", "Photography"],
@@ -12,6 +14,7 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const { language } = useLanguage();
   return (
     <footer className="py-16 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
