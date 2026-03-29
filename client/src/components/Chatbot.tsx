@@ -118,9 +118,10 @@ export default function Chatbot() {
             </h3>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+              className="p-1.5 hover:bg-white/30 rounded-lg transition-colors flex items-center justify-center"
+              title="Close chat"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-white" />
             </button>
           </div>
 
