@@ -10,7 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/one-heart-logo_eebc393f.png";
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/one-heart-logo-hq-6ziWDjtTJmHa9STSwb7gTY.webp";
 
 const getNavLinks = (lang: string) => [
   { label: t("nav.services", lang as any), href: "#services" },
@@ -53,16 +53,24 @@ export default function Navbar() {
           {/* Logo */}
           <a
             href="#"
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-3 group hover:opacity-80 transition-opacity"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           >
-            <img src={LOGO_URL} alt="One Heart" className="w-8 h-8" />
-            <span
-              className="text-lg font-bold tracking-tight hidden sm:inline"
-              style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
-            >
-              One Heart
-            </span>
+            <img src={LOGO_URL} alt="One Heart" className="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
+            <div className="hidden sm:block">
+              <span
+                className="text-xl font-bold tracking-tight block"
+                style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
+              >
+                One Heart
+              </span>
+              <span
+                className="text-xs text-gray-500 tracking-widest"
+                style={{ fontFamily: "'Outfit', sans-serif" }}
+              >
+                Event Planning
+              </span>
+            </div>
           </a>
 
           {/* Desktop Nav */}

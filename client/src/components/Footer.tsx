@@ -2,10 +2,12 @@
  * Footer — Eventique
  * Style: Glass card footer with links and social icons
  */
-import { Sparkles, Instagram, Twitter, Facebook, Linkedin } from "lucide-react";
+import { Instagram, Twitter, Facebook, Linkedin } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
+
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663491263720/K56cdPnQSuQdfWaFVptZpB/one-heart-logo-hq-6ziWDjtTJmHa9STSwb7gTY.webp";
 
 const footerLinks = {
   Services: ["Wedding Planning", "Corporate Events", "Birthday Parties", "Galas & Concerts", "Photography"],
@@ -22,16 +24,22 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {/* Brand */}
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center shadow-md">
-                  <Sparkles className="w-4 h-4 text-white" />
+              <div className="flex items-center gap-3">
+                <img src={LOGO_URL} alt="One Heart" className="w-14 h-14 object-contain" />
+                <div>
+                  <span
+                    className="text-lg font-bold block"
+                    style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
+                  >
+                    One Heart
+                  </span>
+                  <span
+                    className="text-xs text-gray-500 tracking-widest"
+                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    Event Planning
+                  </span>
                 </div>
-                <span
-                  className="text-xl font-bold"
-                  style={{ fontFamily: "'Fraunces', Georgia, serif", color: "oklch(0.12 0.01 285)" }}
-                >
-                  Eventique
-                </span>
               </div>
               <p
                 className="text-sm text-gray-500 leading-relaxed"
