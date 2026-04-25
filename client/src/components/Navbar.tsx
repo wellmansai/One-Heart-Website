@@ -6,6 +6,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { t } from "@/lib/translations";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -18,6 +19,7 @@ const getNavLinks = (lang: string) => [
   { label: t("nav.portfolio", lang as any), href: "#portfolio" },
   { label: t("nav.testimonials", lang as any), href: "#testimonials" },
   { label: t("nav.contact", lang as any), href: "#contact" },
+  {label : t("nav.privacyPolicy", lang as any), href: "#privacy-policy" },
 ];
 
 export default function Navbar() {
@@ -75,6 +77,13 @@ export default function Navbar() {
 
           {/* CTA & Language */}
           <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-purple-50/80 transition-all duration-200"
+              style={{ fontFamily: "'Outfit', sans-serif" }}
+            >
+              Dashboard
+            </Link>
             <LanguageSwitcher />
             <button
               onClick={() => handleNavClick("#contact")}
@@ -110,6 +119,13 @@ export default function Navbar() {
             <div className="px-4 py-2">
               <LanguageSwitcher />
             </div>
+            <Link
+              href="/dashboard"
+              className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-purple-50 transition-colors"
+              style={{ fontFamily: "'Outfit', sans-serif" }}
+            >
+              Dashboard
+            </Link>
             <button
               onClick={() => handleNavClick("#contact")}
               className="btn-black mt-2 justify-center"
